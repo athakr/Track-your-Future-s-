@@ -5,19 +5,6 @@ public class profile{
     private String eMail;
     public int count = 0;
 
-
-/*Main method */
-    public static void main(String args[]){
-    profile p = new profile();
-    p.fill("Diddy", "Computer", "diddy@thakur.com");
-    /*
-    These are checks placed to debug and see if there is an error with user input. 
-
-    System.out.println(p.getPassword());
-    System.out.println(p.getAccountID());
-    System.out.println(p.getEMail());
-    System.out.println(p.getUserName());*/
-}
 /*username methods */    
     public void setUserName(String name){
         user = name;
@@ -100,12 +87,5 @@ public class profile{
 
     public String getEMail(){
         return eMail;
-    }
-/*fill methods */
-    public void fill(String username, String password, String email){
-        setUserName(username);
-        setEmail(email);
-        setPassword(password);
-        System.out.println(username + ", " + password +", " + email);
     }
 }

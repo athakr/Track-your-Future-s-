@@ -6,11 +6,6 @@ public class payment extends budget{
     private ArrayList<String> repaymentPeriod = new ArrayList<String>(); //date in month/day/year date xx/xx/xx 
     //private int userAccountId;
 
-
-    public static void main(String args[]){
-
-    }
-
 //Input method
     public void input(Double loan, Double interest/* loanT*/, String repayment){
         loanAmount.add(loan);

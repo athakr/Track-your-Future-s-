@@ -8,21 +8,13 @@ public class budget extends profile{
     private int userAccountId = 0;
     private String allocMethod = "50-30-20";
 
-
-    public static void main(String args[]){
-        budget b = new budget();
-        b.calculate(78000);
-        b.addItem("Rent", (double)2000);
-        b.addItem("Car", 140.0);
-        b.addItem("phone", 36.0);
-        b.addItem("Water", 700.0);
-        b.displayItem();
-        b.removeItem("Water");
-        b.removeItem("House");
-        b.remaining();
-        System.out.println(b.getSpending());
+/*fill methods */ //Note: move this to the lowest class in the hierarchy later  
+    public void fill(String username, String password, String email){
+        setUserName(username);
+        setEmail(email);
+        setPassword(password);
+        System.out.println(username + ", " + password +", " + email);
     }
-
 /*salary methods */
     public void setSalary(double sal){
         salary = sal;

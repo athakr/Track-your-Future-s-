@@ -3,15 +3,24 @@ public class budget extends profile{
     private ArrayList<String> items = new ArrayList<>();
     private ArrayList<Double> costs = new ArrayList<Double>();
     private double salary = 0;
+    private double totalCurSpend = 0;
     private double annualBudget = 0;
     private int userAccountId = 0;
-    private String allocMethod = null;
-    private double allocPercent = 0.0; /* this is an allocation in *100 */
-
+    private String allocMethod = "50-30-20";
 
 
     public static void main(String args[]){
-
+        budget b = new budget();
+        b.calculate(78000);
+        b.addItem("Rent", (double)2000);
+        b.addItem("Car", 140.0);
+        b.addItem("phone", 36.0);
+        b.addItem("Water", 700.0);
+        b.displayItem();
+        b.removeItem("Water");
+        b.removeItem("House");
+        b.remaining();
+        System.out.println(b.getSpending());
     }
 
 /*salary methods */
@@ -21,7 +30,32 @@ public class budget extends profile{
     public double getSalary(){
         return salary;
     }
+/*Spending methods */
+    public void setSpending(ArrayList<Double> cost){
+        double total = 0;
+        for(int i = 0; i < cost.size(); i++){
+            total = total + cost.get(i);
+        }
+        totalCurSpend = total;
+    }
+    public double getSpending(){
+        return totalCurSpend;
+    }
+/*annual Budget methods */
+    public void setBudget(double sal){
+        annualBudget = sal;
+    }
+    public double getBudget(){
+        return annualBudget;
+    }
 
+/*Id methods */
+    public void setID(){
+        userAccountId = super.getAccountID();
+    }
+    public int getID(){
+        return userAccountId;
+    }
 /*Adding item and its cost to the arraylist set */
     public void addItem(String name){
         items.add(name);
@@ -49,10 +83,61 @@ public class budget extends profile{
         else{
             items.remove(pos);
             costs.remove(pos);
+            System.out.println(name + " has been removed from the budget.");
         }
     }
 /*Calculate and annualBudget */
-    
+    public void calculate(double sal){
+        setSalary(sal);
+        double afterTaxSal = afterTax(sal);
+        setBudget(afterTaxSal*0.8);
+        percentRecommend(annualBudget);
+    }
+    public void remaining(){
+        double monthlyspend = getBudget()/12;
+        setSpending(costs);
+        if(totalCurSpend >= monthlyspend){
+            System.out.println("You have reached or exceed your monthly budget");
+        }
+        else{
+            System.out.printf("You still have $%.2f to spend for this month.\n", (monthlyspend - totalCurSpend));
+        }
+    }
+    public double afterTax(double sal){
+        double afterTax;
+        double fedTax = 0;
+        double stateTax = 0;
+
+        /*fed */
+        if(sal > 523601.0){
+            fedTax = 157804.25 + ((sal - 523600)*.37);
+        }
+        else if(sal > 209426){
+            fedTax = 47843 + ((sal - 209425)*.35);
+        }
+        else if(sal > 164926){
+            fedTax = 33603 + ((sal - 164925)*.32);
+        }
+        else if(sal > 86376){
+            fedTax = 14751 + ((sal - 86375)*.24);
+        }
+        else if(sal > 40526){
+            fedTax = 4664 + ((sal - 40525)*.22);
+        }
+        else if(sal > 9951){
+            fedTax = 995 + ((sal - 9950)*.12);
+        }
+        else{
+            fedTax = sal * .1;
+        }
+
+        /*state for Ohio*/
+        stateTax = sal * 0.0399;
+    /*after tax calculation */
+        afterTax = sal - fedTax - stateTax;
+        return afterTax;
+
+    }
 /*Displaying all the items */
     public void displayItem(){
         System.out.println("Current Item in Budget");
@@ -60,12 +145,12 @@ public class budget extends profile{
             System.out.println(items.get(i) + ": " + costs.get(i));
         }
     }
-    public void percentRecommend(double sal){
-        setSalary(sal);
-        double needs = sal*0.5;
-        double wants = sal*0.3;
-        double savings = sal*0.2;
+    public void percentRecommend(double netSal){
+        
+        double needs = netSal*0.5;
+        double wants = netSal*0.3;
+        double savings = netSal*0.2;
 
-        System.out.print("Allocation for needs: $" + needs + "\nAllocation for wants: $" + wants + "\nAllocation for savings: $" + savings);
+        System.out.printf("Allocation for needs: $%.2f \nAllocation for wants: $%.2f\nAllocation for savings: $%.2f\n", needs, wants, savings);
     }
 }

@@ -147,10 +147,10 @@ public class budget extends profile{
     }
     public void percentRecommend(double netSal){
         
-        double needs = netSal*0.5;
-        double wants = netSal*0.3;
-        double savings = netSal*0.2;
+        double needs = (netSal/12)*0.5;
+        double wants = (netSal/12)*0.3;
+        double savings = (netSal/12)*0.2;
 
-        System.out.printf("Allocation for needs: $%.2f \nAllocation for wants: $%.2f\nAllocation for savings: $%.2f\n", needs, wants, savings);
+        System.out.printf("monthly allocation for needs: $%.2f \nmonthly allocation for wants: $%.2f\nmonthly allocation for savings: $%.2f\n", needs, wants, savings);
     }
 }

@@ -1,20 +1,12 @@
 import java.util.*;
-public class budget extends profile{
+public class budget{
     private ArrayList<String> items = new ArrayList<>();
     private ArrayList<Double> costs = new ArrayList<Double>();
     private double salary = 0;
     private double totalCurSpend = 0;
     private double annualBudget = 0;
-    private int userAccountId = 0;
     private String allocMethod = "50-30-20";
 
-/*fill methods */ //Note: move this to the lowest class in the hierarchy later  
-    public void fill(String username, String password, String email){
-        setUserName(username);
-        setEmail(email);
-        setPassword(password);
-        System.out.println(username + ", " + password +", " + email);
-    }
 /*salary methods */
     public void setSalary(double sal){
         salary = sal;
@@ -34,20 +26,13 @@ public class budget extends profile{
         return totalCurSpend;
     }
 /*annual Budget methods */
-    public void setBudget(double sal){
+    public void setAnnualBudget(double sal){
         annualBudget = sal;
     }
-    public double getBudget(){
+    public double getAnnualBudget(){
         return annualBudget;
     }
 
-/*Id methods */
-    public void setID(){
-        userAccountId = super.getAccountID();
-    }
-    public int getID(){
-        return userAccountId;
-    }
 /*Adding item and its cost to the arraylist set */
     public void addItem(String name){
         items.add(name);
@@ -82,11 +67,11 @@ public class budget extends profile{
     public void calculate(double sal){
         setSalary(sal);
         double afterTaxSal = afterTax(sal);
-        setBudget(afterTaxSal*0.8);
+        setAnnualBudget(afterTaxSal*0.8);
         percentRecommend(annualBudget);
     }
     public void remaining(){
-        double monthlyspend = getBudget()/12;
+        double monthlyspend = getAnnualBudget()/12;
         setSpending(costs);
         if(totalCurSpend >= monthlyspend){
             System.out.println("You have reached or exceed your monthly budget");

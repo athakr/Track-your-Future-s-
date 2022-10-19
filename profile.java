@@ -4,6 +4,17 @@ public class profile{
     private String password;
     private String eMail;
     public int count = 0;
+    private budget userBudget = new budget();
+    private payment userPayment = new payment();
+
+
+/*fill methods */ 
+    public void fill(String username, String password, String email){
+        setUserName(username);
+        setEmail(email);
+        setPassword(password);
+        System.out.println(username + ", " + password +", " + email);
+    }
 
 /*username methods */    
     public void setUserName(String name){
@@ -87,5 +98,26 @@ public class profile{
 
     public String getEMail(){
         return eMail;
+    }
+
+/* Budget and Payment methods*/
+    public void setBudget(budget budgett){
+        userBudget = budgett;
+        return;
+    }    
+
+
+    public budget getBudget(){
+        return userBudget;
+    }
+
+    public void setPayment(payment paymentt){
+        userPayment = paymentt;
+        return;
+    }    
+
+
+    public payment getPayment(){
+        return userPayment;
     }
 }

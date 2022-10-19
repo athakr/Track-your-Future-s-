@@ -9,21 +9,9 @@ public class payment extends budget{
     private ArrayList<Double> interestRate = new ArrayList<Double>(); //List of Interest collerated to the interest amount
     private ArrayList<Integer> loanTerms = new ArrayList<>(); //List of Loanterms for the loans 
     private ArrayList<Double> monthlyPay = new ArrayList<>();  //Amount that the user can use to pay loans monthly (found from calculate method)
-    //private int loanTerms = 0;
     private ArrayList<Date> repaymentPeriod = new ArrayList<>(); //date in yyyy-MM-dd
-    private int userAccountId;
+    private double monthlyBudget;
 
-
-    public static void main(String args[]){
-
-    }
-//acount id method
-    public void setID(){
-        userAccountId = super.getAccountID();
-    }
-    public int getAccountID(){
-        return userAccountId;
-    }
 //monthly payment methods
     public void setMonthlyPay(double amount){
         monthlyPay.add(amount);
@@ -61,9 +49,7 @@ public class payment extends budget{
         loanName.add(name);
         loanAmount.add(loan);
         interestRate.add(interest);
-        loanTerms.add(term);
-        setID();
-        
+        loanTerms.add(term);    
     }
 /*repayment date calculation */
     public void calcRepay(String repayment) throws Exception{
@@ -107,7 +93,7 @@ public class payment extends budget{
                     break;
                 }
                 else{
-                    pos = -1;
+                    //pos = -1;
                 }
             }
         }
@@ -115,9 +101,6 @@ public class payment extends budget{
         double principal_amount = amount - down;
         int terms = (loanTerms.get(pos));
         double rate = (interestRate.get(pos));
-        double monthlyBudget = super.getBudget()/12;
-
-
         double[] infoList = calMonPay(name, principal_amount, rate, terms);
 
         System.out.printf("Your monthly payment is %.2f and your total payment with interest is %.2f\n", infoList[0], infoList[1]);
@@ -128,6 +111,10 @@ public class payment extends budget{
         }
         
 
+    }
+
+    public void setMonthlyBudget(double yearlyBudget){
+        monthlyBudget = yearlyBudget/12;
     }
 
     public void calculateMonthly(String name, double amount, double rate, int terms){ //terms in years
@@ -161,7 +148,7 @@ public class payment extends budget{
     public void display(){
         System.out.println("Current Monthly Loan Payments");
         for(int i = 0; i < loanName.size(); i++){
-            System.out.printf(loanName.get(i) + "| Amount: %.2f | Rate: %.2f | Term: %d | Repayment: " + repaymentPeriod.get(i) + "\n", loanAmount.get(i), interestRate.get(i), loanTerms.get(i) );
+            System.out.printf(loanName.get(i) + "| Amount: %.2f | Rate: %.2f | Term: %d | Repayment: " /*+ repaymentPeriod.get(i)*/ + "\n", loanAmount.get(i), interestRate.get(i), loanTerms.get(i) );
         }
     }
 }

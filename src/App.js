@@ -1,32 +1,33 @@
 import Tabs from "./components/Tabs";
+import Budget from "./components/budget";
+import Payment from "./components/payment";
 import './App.css';
 
 function App() {
+  //const budget = new budget()
   return (
-    <body>
-      <div class='main'>
-        <div class='core'>
-          <h1>Track Your Future</h1>
-          <Tabs>
-            <div label="Budget">
-              Budget tab.
-            </div>
-            <div label="Tracker">
-              Tracker tab.
-            </div>
-            <div label="Payment">
-              Payment tab.
-            </div>
-            <div label="Engine">
-              Engine tab.
-            </div>
-            <div label="Profile">
-              Profile tab.
-            </div>
-          </Tabs>
-          </div>
+  <div className='main'>
+    <div className='core'>
+      <h1>Track Your Future</h1>
+      <Tabs>
+        <div label="Budget">
+          <Budget/>
+        </div>
+        <div label="Tracker">
+          Tracker tab.
+        </div>
+        <div label="Payment">
+          <Payment/>
+        </div>
+        <div label="Engine">
+          Engine tab.
+        </div>
+        <div label="Profile">
+          Profile tab.
+        </div>
+      </Tabs>
       </div>
-    </body>
+  </div>
   );
 }
 

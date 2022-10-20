@@ -6,21 +6,20 @@ import plotly.graph_objs as go
 
 stock = "TSLA"
 data = yf.download(tickers=stock, period='1d', interval='1m')
-data
 
 
 track = yf.Ticker(stock)
 info = track.info
 currentPrice = 0.0
 Open = 0.0
-Change = currentPrice - Open
+
 dayLow = 0
 dayHigh = 0
 
 
 
+
 for key in info:
-  #print(key)
   if(key == 'currentPrice'):
     currentPrice = info[key]
   if(key == 'open'):
@@ -29,8 +28,10 @@ for key in info:
     dayLow = info[key]
   if(key == 'dayHigh'):
     dayHigh = info[key]
-
-print("current Price of "+ stock + " : $" + str(currentPrice) + " : "+ str(Change))
+    
+Change = currentPrice - Open
+print(Change)
+print("current Price of "+ stock + " and change today: $" + str(currentPrice) + " :$%.2f " % Change)
 print("Open today at: $" + str(Open))
 print("Today's day low / day high is : $" + str(dayLow) + " / $" + str(dayHigh))
 

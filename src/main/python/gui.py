@@ -16,12 +16,20 @@ dayHigh = 0
 def calculate(stk):
     #calculate stock info
     stock = stk
-    data = yf.download(tickers=stock, period='1d', interval='1m')
-
-
-    track = yf.Ticker(stock)
-    info = track.info
-
+    currentPrice = 0
+    Close = 0
+    Open = 0
+    dayLow =0
+    dayHigh = 0
+    error = False
+    try:
+        data = yf.download(tickers=stock, period='1d', interval='1m')
+        error = False
+        track = yf.Ticker(stock)
+        info = track.info
+    except UnboundLocalError:
+        error = True
+        print("Invalid Stock. Enter a US-based stock")
 
     for key in info:
         if(key == 'currentPrice'):

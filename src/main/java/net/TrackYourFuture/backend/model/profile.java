@@ -3,6 +3,9 @@ package net.TrackYourFuture.backend.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import main.java.budget
+import main.java.payment
+
 @Entity
 @Table(name = "users")
 public class Profile{

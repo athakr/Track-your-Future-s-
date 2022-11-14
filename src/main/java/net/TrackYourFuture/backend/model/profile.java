@@ -38,6 +38,9 @@ public class Profile{
         setEmail(email);
         setPassword(password);
         System.out.println(username + ", " + password +", " + email);
+        if(this.password != null && this.eMail != null){
+          setAccountID();
+        }
     }
 
 /*username methods */    

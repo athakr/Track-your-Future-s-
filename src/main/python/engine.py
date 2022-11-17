@@ -7,6 +7,10 @@ from json.decoder import JSONDecodeError
 class Track:
   def __init__(self, stock):
     self.stock = stock
+    self.cons
+    self.bal
+    self.growth
+    self.agg_growth
   def info(self):
     self.data = yf.Ticker(self.stock)
     self.infor = self.data.info
@@ -121,10 +125,26 @@ class Engine():
 
         stock_list = stock_list.sort_values(by='Beta', ascending=True)
         stock_list.to_csv('stock_list.csv')
-    def get_engine_portfolio(self):
+    def get_conservative_portfolio(self):
         path = 'stock_list.csv'
         stocks = pd.DataFrame(pd.read_csv(path))
-        self.cons = stocks.loc[(stocks['Beta'])]
+        self.cons = stocks.loc[(stocks['Beta']<=0.6)]
+        self.cons = self.cons.sort_values(by='Dividend yield', ascending=False)
+    def get_balanced_portfolio(self):
+        path = 'stock_list.csv'
+        stocks = pd.DataFrame(pd.read_csv(path))
+        self.bal = stocks.loc[(stocks['Beta'] > 0.6) & (stocks['Beta'] <= 1.05)]
+        self.bal = self.bal.sort_values(by='Dividend yield', ascending=False)
+    def get_growth_portfolio(self):
+        path = 'stock_list.csv'
+        stocks = pd.DataFrame(pd.read_csv(path))
+        self.growth = stocks.loc[(stocks['Beta'] > 1.05) & (stocks['Beta'] <= 1.5)]
+        self.growth = self.growth.sort_values(by='Dividend yield', ascending=False)
+    def get_agg_growth_portfolio(self):
+        path = 'stock_list.csv'
+        stocks = pd.DataFrame(pd.read_csv(path))
+        self.agg_growth = stocks.loc[(stocks['Beta'] > 1.5)]
+        self.agg_growth = self.agg_growth.sort_values(by='Dividend yield', ascending=False)
 #Testing#
 Test1 = Engine(1, 1000)
 Test1.residualDisplay()

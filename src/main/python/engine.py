@@ -86,18 +86,20 @@ class Engine():
             print("You do not have enough money to invest properly")
         else:
             print(self.dol_alloc)
-        
+    def get_recommendation(self, stk_num):
+        """Builds a recommendation based on the users risk and number of stocks"""
+        self.stk_num = stk_num #number of stocks
         if(self.risk == 1):
-            self.recommendation = self.build_rec(self.get_conservative_portfolio(), self.budget, 5)
+            self.recommendation = self.build_rec(self.get_conservative_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
         elif(self.risk == 2):
-            self.recommendation = self.build_rec(self.get_balanced_portfolio(), self.budget, 5)
+            self.recommendation = self.build_rec(self.get_balanced_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
         elif(self.risk == 3):
-            self.recommendation = self.build_rec(self.get_growth_portfolio(), self.budget, 5)
+            self.recommendation = self.build_rec(self.get_growth_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
         else:
-            self.recommendation = self.build_rec(self.get_agg_growth_portfolio(), self.budget, 5)
+            self.recommendation = self.build_rec(self.get_agg_growth_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
 
     def dollar_update(self, risk, dollars):
@@ -204,12 +206,16 @@ class Engine():
         df = pd.DataFrame({'Symbol': rec_stock,
                             'price': rec_price})
 
-        df['Dollars per stock'] = df['price']
-        df.iloc[:,2] = df.iloc[:,2].div(el)
-        return df 
+        per_alloc = self.inv / el
+        df['Dollars per stock'] = per_alloc
+        df['Shares per stock'] = df.iloc[:,1].div(per_alloc).round(2)
+        df['Shares per stock'] = (1/df['Shares per stock']).round(2)
+        self.portfolio = df
+        return self.portfolio
 
 #Testing#
 Test1 = Engine(1, 1000) #test the first allocation with conservative risk and $1000
 Test1.residualDisplay() #display
-Test1.dollar_update(2, 2000) #update to balanced allocation and $2000
+Test1.get_recommendation(15)
+#Test1.dollar_update(2, 2000) #update to balanced allocation and $2000
 

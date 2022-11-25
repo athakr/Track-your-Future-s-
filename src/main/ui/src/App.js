@@ -1,6 +1,7 @@
 import Tabs from "./components/Tabs";
 import Budget from "./components/budget";
 import Payment from "./components/payment";
+import UserComponent from "./components/UserComponent";
 import './App.css';
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           Engine tab.
         </div>
         <div label="Profile">
-          Profile tab.
+          <UserComponent/>
         </div>
       </Tabs>
       </div>

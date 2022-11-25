@@ -2,6 +2,11 @@ package net.TrackYourFuture.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 
 @Entity
 @Table(name = "users")
@@ -18,10 +23,10 @@ public class Profile{
     private String password;
 
 
-    private String eMail;
+    private String email;
     public int count = 0;
-    private budget userBudget = new budget();
-    private payment userPayment = new payment();
+    //private budget userBudget = new budget();
+    //private payment userPayment = new payment();
 
     public Profile(){
 
@@ -102,11 +107,11 @@ public class Profile{
     public void setEmail(String mail){
         boolean valid = checkEmail(mail);
         if(valid){
-            this.eMail = mail;
+            this.email = mail;
         }
         else{
             System.out.println("Please enter a valid email address!");
-            this.eMail = null;
+            this.email = null;
         }
     }
     public boolean checkEmail(String mail){
@@ -121,26 +126,26 @@ public class Profile{
     }
 
     public String getEMail(){
-        return this.eMail;
+        return this.email;
     }
 
-/* Budget and Payment methods*/
-    public void setBudget(budget budgett){
-        this.userBudget = budgett;
-    }    
+// /* Budget and Payment methods*/
+//     public void setBudget(budget budgett){
+//         this.userBudget = budgett;
+//     }    
 
 
-    public budget getBudget(){
-        return this.userBudget;
-    }
+//     public budget getBudget(){
+//         return this.userBudget;
+//     }
 
-    public void setPayment(payment paymentt){
-        this.userPayment = paymentt;
-        return;
-    }    
+//     public void setPayment(payment paymentt){
+//         this.userPayment = paymentt;
+//         return;
+//     }    
 
 
-    public payment getPayment(){
-        return this.userPayment;
-    }
+//     public payment getPayment(){
+//         return this.userPayment;
+//     }
 }

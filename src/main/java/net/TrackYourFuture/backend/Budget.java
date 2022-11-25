@@ -1,13 +1,18 @@
-package main.java;
+package net.TrackYourFuture.backend;
+
 import java.util.*;
-public class budget{
+public class Budget{
     private ArrayList<String> items = new ArrayList<>();
     private ArrayList<Double> costs = new ArrayList<Double>();
     private double salary = 0;
     private double totalCurSpend = 0;
     private double annualBudget = 0;
-    private String allocMethod = "50-30-20";
+    // private String allocMethod = "50-30-20";
 
+/*Constructor */
+    public Budget (){
+        
+    }
 /*salary methods */
     public void setSalary(double sal){
         salary = sal;

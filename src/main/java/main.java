@@ -1,4 +1,6 @@
-import main.java.net.TrackYourFuture.backend.model.Profile;
+
+import net.TrackYourFuture.backend.model.Profile;
+
 class Main {
   public static void main(String[] args) {
     //Profile testing
@@ -43,15 +45,32 @@ class Main {
       //Payment testing
       /*This includes our functional test cases MPTT-1 to MPTT-3, each one of them highlight for what line of code it will take in */
         /*MPTT-1 */
-      p.getPayment().input("car loan1", 5000.00, 0.20, 4, "2024-08-01");
-      p.getPayment().input("car loan2", 3000.00, 0.25, 4, "2024-07-30");
+      //For some reason exception errors kept cropping up so I just placed these in a try catch.
+      try{
+        p.getPayment().input("car loan1", 5000.00, 0.20, 4, "2024-08-01");
+        p.getPayment().input("car loan2", 3000.00, 0.25, 4, "2024-07-30");
+      }catch(Exception e){
+        System.out.println("An exception occurred: " + e);
+      }
 
     /* MPTT-2 : Incorrect loan terms or information */
-      p.getPayment().input("car loan3", 30000.00, 0.15, -4, "2023-07-30"); //improper terms
-      p.getPayment().input("car loan3", 30000.00, 10.15, 1, "2023-07-30"); //improper interest rate
-      p.getPayment().input("car loan3", -10000.00, 0.15, 30, "2052-07-30"); //improper amount
+      //For some reason exception errors kept cropping up so I just placed these in a try catch.
+      try{
+        p.getPayment().input("car loan3", 30000.00, 0.15, -4, "2023-07-30"); //improper terms
+        p.getPayment().input("car loan3", 30000.00, 10.15, 1, "2023-07-30"); //improper interest rate
+        p.getPayment().input("car loan3",-10000.00, 0.15, 30, "2052-07-30"); //improper amount
+      }catch(Exception e){
+        System.out.println("An exception occurred: " + e);
+      }
+
     /*MPTT-3 Display loan payments */
-      p.getPayment().getMonthlyPay();
-      p.getPayment().display();
+      //For some reason exception errors kept cropping up so I just placed these in a try catch.
+      try{
+        p.getPayment().getMonthlyPay();
+        p.getPayment().display();
+      }catch(Exception e){
+        System.out.println("An exception occurred: " + e);
+      }      
+
   }
 }

@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 
-import main.java.budget
-import main.java.payment
+import net.TrackYourFuture.backend.Budget;
+import net.TrackYourFuture.backend.Payment;
 
 @Entity
 @Table(name = "users")
@@ -28,8 +28,8 @@ public class Profile{
 
     private String email;
     public int count = 0;
-    //private budget userBudget = new budget();
-    //private payment userPayment = new payment();
+    private Budget userBudget = new Budget();
+    private Payment userPayment = new Payment();
 
     public Profile(){
 
@@ -46,7 +46,7 @@ public class Profile{
         setEmail(email);
         setPassword(password);
         System.out.println(username + ", " + password +", " + email);
-        if(this.password != null && this.eMail != null){
+        if(this.password != null && this.email != null){
           setAccountID();
         }
     }
@@ -135,23 +135,22 @@ public class Profile{
         return this.email;
     }
 
-// /* Budget and Payment methods*/
-//     public void setBudget(budget budgett){
-//         this.userBudget = budgett;
-//     }    
+/* Budget and Payment methods*/
+    public void setBudget(Budget budgett){
+        this.userBudget = budgett;
+    }    
 
 
-//     public budget getBudget(){
-//         return this.userBudget;
-//     }
+    public Budget getBudget(){
+        return this.userBudget;
+    }
 
-//     public void setPayment(payment paymentt){
-//         this.userPayment = paymentt;
-//         return;
-//     }    
+    public void setPayment(Payment paymentt){
+        this.userPayment = paymentt;
+        return;
+    }    
 
-
-//     public payment getPayment(){
-//         return this.userPayment;
-//     }
+    public Payment getPayment(){
+        return this.userPayment;
+    }
 }

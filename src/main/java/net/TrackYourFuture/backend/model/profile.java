@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 
 
+import main.java.budget
+import main.java.payment
+
 @Entity
 @Table(name = "users")
 public class Profile{
@@ -43,6 +46,9 @@ public class Profile{
         setEmail(email);
         setPassword(password);
         System.out.println(username + ", " + password +", " + email);
+        if(this.password != null && this.eMail != null){
+          setAccountID();
+        }
     }
 
 /*username methods */    

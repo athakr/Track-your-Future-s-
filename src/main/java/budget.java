@@ -1,3 +1,4 @@
+package main.java;
 import java.util.*;
 public class budget{
     private ArrayList<String> items = new ArrayList<>();
@@ -41,14 +42,16 @@ public class budget{
     public void addItem(String name, Double cost){
         items.add(name);
         costs.add(cost);
+        
     }
 /*removing an item */
     public void removeItem(String name){
         String hold = name;
         int pos = 0;
         for(int i = 0; i < items.size(); i++){
-            if(items.get(i) == hold){
+            if(items.get(i).equals(hold)){
                 pos = i;
+                i = items.size();
             }
             else{
                 pos = -1;

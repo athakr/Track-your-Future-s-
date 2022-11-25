@@ -1,8 +1,10 @@
+package main.java;
 import java.util.*;
 import java.util.Date;
 import java.sql.*;
 import java.time.*;
 import java.text.*;
+//package main.java;
 public class payment extends budget{
     private ArrayList<String> loanName = new ArrayList<>(); //List of loans
     private ArrayList<Double> loanAmount = new ArrayList<Double>();// list of loan amounts collerated to the loan names
@@ -12,6 +14,11 @@ public class payment extends budget{
     private ArrayList<Date> repaymentPeriod = new ArrayList<>(); //date in yyyy-MM-dd
     private double monthlyBudget;
 
+
+   /* public static void main(String[] args) {
+
+
+    } */
 //monthly payment methods
     public void setMonthlyPay(double amount){
         monthlyPay.add(amount);
@@ -42,14 +49,22 @@ public class payment extends budget{
             System.out.println("Monthly Payment for Loan " + (i+1) + ": " + monthlyPay.get(i));
             total += monthlyPay.get(i);
         }
-        System.out.printf("Total Monthly Payment: %.2f", total);
+        System.out.printf("Total Monthly Payment: %.2f \n", total);
     }
 //Input method
-    public void input(String name, Double loan, Double interest, Integer term, String repayment){
-        loanName.add(name);
-        loanAmount.add(loan);
-        interestRate.add(interest);
-        loanTerms.add(term);    
+    public void input(String name, Double loan, Double interest, Integer term, String repayment) throws Exception{
+        if(loan > 0 && interest > 0 && interest < 5 && term > 0){
+            loanName.add(name);
+            loanAmount.add(loan);
+            interestRate.add(interest);
+            loanTerms.add(term);  
+            calcRepay(repayment);
+            calculate(name, loan);
+        }
+        else{
+            System.out.println("Please fix the inputs");
+        }
+        
     }
 /*repayment date calculation */
     public void calcRepay(String repayment) throws Exception{
@@ -138,17 +153,17 @@ public class payment extends budget{
 
         setMonthlyPay(monthlyPayment);
 
-        pay[0] = monthlyPayment;
-        pay[1] = totalpay;
-        pay[2] = monthlyExpIncome;
+        pay[0] = Math.round(monthlyPayment);
+        pay[1] = Math.round(totalpay);
+        pay[2] = Math.round(monthlyExpIncome);
         return pay;
     }
 
 /*Displaying all the items */
-    public void display(){
+    public void display() throws Exception{
         System.out.println("Current Monthly Loan Payments");
-        for(int i = 0; i < loanName.size(); i++){
-            System.out.printf(loanName.get(i) + "| Amount: %.2f | Rate: %.2f | Term: %d | Repayment: " /*+ repaymentPeriod.get(i)*/ + "\n", loanAmount.get(i), interestRate.get(i), loanTerms.get(i) );
+        for(int i = 0; i <= loanName.size(); i++){
+            System.out.printf(loanName.get(i) + "| Amount: %.2f | Rate: %.2f | Term: %d | Repayment: " + repaymentPeriod.get(i) + "\n", loanAmount.get(i), interestRate.get(i), loanTerms.get(i) );
         }
     }
 }

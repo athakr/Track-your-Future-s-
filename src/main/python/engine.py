@@ -79,12 +79,18 @@ class Engine():
         
         #make it into a Dataframe
         self.dol_alloc = pd.DataFrame(d_alloc)
+    def getRisk(self):
+        return self.risk
+    
+    def getDollarInvested(self):
+        return self.budget
+
     def getDolAlloc(self):
         return self.dol_alloc
 
     def residualDisplay(self):
         "A method that returns the proper dollar investment in each investment type based on risk preference"
-        if(self.budget < 51):
+        if(self.budget < 101):
             print("You do not have enough money to invest properly")
         else:
             print(self.dol_alloc)
@@ -103,6 +109,8 @@ class Engine():
         else:
             self.recommendation = self.build_rec(self.get_agg_growth_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
+            
+        return self.recommendation
 
     def dollar_update(self, risk, dollars):
         if(risk not in range(1,5)):

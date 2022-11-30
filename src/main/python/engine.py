@@ -79,6 +79,8 @@ class Engine():
         
         #make it into a Dataframe
         self.dol_alloc = pd.DataFrame(d_alloc)
+    def getDolAlloc(self):
+        return self.dol_alloc
 
     def residualDisplay(self):
         "A method that returns the proper dollar investment in each investment type based on risk preference"
@@ -194,7 +196,12 @@ class Engine():
         rec_stock = np.array([])
         rec_price = np.array([])
         ek = self.stk_prt['Symbol']
-        el = stk_count
+        if(stk_count > len(ek)):
+            el = len(ek)
+        elif(stk_count <= 0):
+            el = 1
+        else:
+            el = stk_count
         for i in range(0, el):
             rec_stock = np.append(rec_stock, ek.iloc[i])
         for i in range(0, len(rec_stock)):
@@ -214,8 +221,8 @@ class Engine():
         return self.portfolio
 
 #Testing#
-Test1 = Engine(1, 1000) #test the first allocation with conservative risk and $1000
-Test1.residualDisplay() #display
-Test1.get_recommendation(15)
+#Test1 = Engine(1, 1000) #test the first allocation with conservative risk and $1000
+##Test1.residualDisplay() #display
+#Test1.get_recommendation(5)
 #Test1.dollar_update(2, 2000) #update to balanced allocation and $2000
 

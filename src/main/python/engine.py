@@ -109,8 +109,8 @@ class Engine():
         else:
             self.recommendation = self.build_rec(self.get_agg_growth_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
-            
-        return self.recommendation
+
+        return self.recommendation 
 
     def dollar_update(self, risk, dollars):
         if(risk not in range(1,5)):
@@ -135,6 +135,7 @@ class Engine():
         #make it into a Dataframe
         self.dol_alloc = pd.DataFrame(d_alloc)
         self.residualDisplay()
+        return self.getDolAlloc()
 
     def update_beta(self):
         path1 = 'DAQ.csv'

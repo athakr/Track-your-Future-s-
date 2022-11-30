@@ -53,6 +53,48 @@ class Testing(unittest.TestCase):
         d = portfolio.getDollarInvested()
         self.assertEqual(d, 0.0)
     
+    def test_updating(self):
+        risk = 1
+        dollars = 1000.0
+        portfolio = Engine(risk, dollars)
+        data = {'US Stock': [(dollars*0.35)],
+                'Foreign Stock': [dollars *0.15],
+                'Bond': [dollars * 0.4],
+                'Short-term investments': [dollars*0.1]}
+        df = pd.DataFrame(data)
+        new_risk = 2
+        c = portfolio.dollar_update(new_risk, dollars)
+        boolean = df.equals(c)
+        self.assertEqual(True, boolean)
+
+    def test_updating_incRisk(self):
+        risk = 1
+        dollars = 1000.0
+        portfolio = Engine(risk, dollars)
+        data = {'US Stock': [(dollars*0.14)],
+                'Foreign Stock': [dollars *0.06],
+                'Bond': [dollars * 0.5],
+                'Short-term investments': [dollars*0.3]}
+        df = pd.DataFrame(data)
+        new_risk = 9
+        c = portfolio.dollar_update(new_risk, dollars)
+        boolean = df.equals(c)
+        self.assertEqual(True, boolean)
+
+    def test_updating_incDollars(self):
+        risk = 1
+        dollars = 1000.0
+        portfolio = Engine(risk, dollars)
+        data = {'US Stock': [0.0],
+                'Foreign Stock': [0.0],
+                'Bond': [0.0],
+                'Short-term investments': [0.0]}
+        df = pd.DataFrame(data)
+        new_dollars = -1000.0
+        c = portfolio.dollar_update(risk, new_dollars)
+        boolean = df.equals(c)
+        self.assertEqual(True, boolean)
+
     def test_conservative_risk(self):
         risk = 1
         dollars = 1000.0

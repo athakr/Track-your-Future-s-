@@ -79,10 +79,18 @@ class Engine():
         
         #make it into a Dataframe
         self.dol_alloc = pd.DataFrame(d_alloc)
+    def getRisk(self):
+        return self.risk
+    
+    def getDollarInvested(self):
+        return self.budget
+
+    def getDolAlloc(self):
+        return self.dol_alloc
 
     def residualDisplay(self):
         "A method that returns the proper dollar investment in each investment type based on risk preference"
-        if(self.budget < 51):
+        if(self.budget < 101):
             print("You do not have enough money to invest properly")
         else:
             print(self.dol_alloc)
@@ -101,6 +109,8 @@ class Engine():
         else:
             self.recommendation = self.build_rec(self.get_agg_growth_portfolio(), (self.budget - self.dol_alloc.loc[0].iloc[2]), self.stk_num)
             print(self.recommendation)
+
+        return self.recommendation 
 
     def dollar_update(self, risk, dollars):
         if(risk not in range(1,5)):
@@ -125,6 +135,7 @@ class Engine():
         #make it into a Dataframe
         self.dol_alloc = pd.DataFrame(d_alloc)
         self.residualDisplay()
+        return self.getDolAlloc()
 
     def update_beta(self):
         path1 = 'DAQ.csv'
@@ -194,7 +205,12 @@ class Engine():
         rec_stock = np.array([])
         rec_price = np.array([])
         ek = self.stk_prt['Symbol']
-        el = stk_count
+        if(stk_count > len(ek)):
+            el = len(ek)
+        elif(stk_count <= 0):
+            el = 1
+        else:
+            el = stk_count
         for i in range(0, el):
             rec_stock = np.append(rec_stock, ek.iloc[i])
         for i in range(0, len(rec_stock)):
@@ -214,8 +230,8 @@ class Engine():
         return self.portfolio
 
 #Testing#
-Test1 = Engine(1, 1000) #test the first allocation with conservative risk and $1000
-Test1.residualDisplay() #display
-Test1.get_recommendation(15)
+#Test1 = Engine(1, 1000) #test the first allocation with conservative risk and $1000
+##Test1.residualDisplay() #display
+#Test1.get_recommendation(5)
 #Test1.dollar_update(2, 2000) #update to balanced allocation and $2000
 

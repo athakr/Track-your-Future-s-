@@ -4,14 +4,26 @@ class Budget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            salary: 0,
+            salary: this.props.salary,
             annualBudget: 0,
-            totalCurSpend: 0,
+            totalCurSpend: this.props.spend,
             percentRecommend: 'Enter a salary to receive a recommendation based on the 50-30-20 rule.',
             stateTax: 0,
             fedTax: 0,
         }
+        if(this.state.salary > 0){
+            let afterTax = this.afterTax(this.state.salary)
+            this.state.annualBudget = afterTax[0]*0.8
+            this.state.percentRecommend = this.percentRecommend(afterTax[0]*0.8)
+            this.state.fedTax = afterTax[1]
+            this.state.stateTax = afterTax[2]
+        }
     }
+    componentDidUpdate(prevProps,prevState){
+        // console.log(prevState)
+        // console.log(this.state)
+    }
+
     handleInputChange = (event) =>{
         const name = event.target.name
         const value = event.target.value
@@ -25,10 +37,12 @@ class Budget extends Component {
         }
     }
     calculate(sal){
-        let afterTaxSal = this.afterTax(sal)*0.8
+        let afterTaxSal = this.afterTax(sal)
         this.setState({
-            annualBudget: afterTaxSal,
-            percentRecommend: this.percentRecommend(afterTaxSal),
+            annualBudget: afterTaxSal[0]*0.8,
+            percentRecommend: this.percentRecommend(afterTaxSal[0]*0.8),
+            fedTax: afterTaxSal[1],
+            stateTax: afterTaxSal[2]
         })
 
     }
@@ -70,21 +84,17 @@ class Budget extends Component {
         }
         stateTax = sal * 0.0399;
         afterTax = sal - fedTax - stateTax;
-        this.setState({
-            fedTax: fedTax.toFixed(2),
-            stateTax: stateTax.toFixed(2)
-        })
-        return afterTax;
+        return [afterTax, fedTax.toFixed(2), stateTax.toFixed(2)];
+    }
+    loadBudget(){
+
     }
     render(){
         let monthlyBudget = this.state.annualBudget/12
-        console.log(monthlyBudget)
         let monthlyBudgetRemaining = 'You have reached or exceeded your montly budget'
         if(this.state.totalCurSpend < monthlyBudget){
-            console.log(this.state.totalCurSpend)
-            console.log(monthlyBudget)
             monthlyBudget = (monthlyBudget -  this.state.totalCurSpend)
-            monthlyBudgetRemaining = `You still have ${monthlyBudget} left to spend this month.`
+            monthlyBudgetRemaining = `You still have ${monthlyBudget.toFixed(2)} left to spend this month.`
         }
 
         return (
@@ -111,7 +121,12 @@ class Budget extends Component {
             <div>
                 <p>{this.state.percentRecommend}</p>
             </div>
-        </div>)
+            <div>
+                <button onClick={event=>this.props.handleSave(event,this.state.salary, this.state.totalCurSpend)}>Save</button>
+            </div>
+
+        </div>
+)
     }
 }
 export default Budget

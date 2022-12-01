@@ -9,6 +9,9 @@ input::-webkit-inner-spin-button {
 body{
   background-color: #d9d9d9;
 }
+button{
+  color: black;
+}
 .main {
   display: flex;
   justify-content: center;

@@ -7,5 +7,5 @@ import net.TrackYourFuture.backend.model.Profile;
 
 @Repository
 public interface UserRepository extends JpaRepository<Profile,Long>{
-
+    
 }

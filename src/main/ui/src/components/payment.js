@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-
-
 class LoanItem{
     constructor(name, amount, interestRate, terms,  repaymentPeriod){
         this.name = name
@@ -17,8 +15,6 @@ class LoanItem{
         let cRateD = Math.pow((1+monthlyRate), totalTerm) - 1
 
         this.monthlyPayment = (amount * (cRateN/cRateD)).toFixed(2)
-
-
     }
 }
 function Loan(props){
@@ -44,7 +40,6 @@ class Payment extends Component {
         }
     }
     removeLoan = (event, id) =>{
-        console.log(id)
         let loans = this.state.loans
         let foundLoan = loans.find(element => element.id ===id)
         let foundLoanIndex = loans.indexOf(foundLoan)
@@ -87,8 +82,13 @@ class Payment extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.loans.map((iloan) => (<tr> <Loan key={iloan.id} loan={iloan.loan}/> <td><button onClick={(event) => this.removeLoan(event, iloan.id)}>Delete</button></td></tr>))}
-                            
+                            {this.state.loans.map((iloan) => (
+                                <tr key={iloan.id}>
+                                    <Loan key={iloan.id} loan={iloan.loan}/>
+                                    <td>
+                                        <button onClick={(event) => this.removeLoan(event, iloan.id)}>Delete</button>
+                                    </td>
+                                </tr>))}
                         </tbody>
                         <tfoot>
                             <tr id='loanFoot'>

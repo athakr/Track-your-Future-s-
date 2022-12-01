@@ -1,8 +1,16 @@
 package net.TrackYourFuture.backend.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Table;
+
+import org.hibernate.type.TrueFalseType;
+
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +24,7 @@ import net.TrackYourFuture.backend.Payment;
 public class Profile{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private long id;
 
     @Column(name = "user_name")
@@ -25,20 +33,74 @@ public class Profile{
     @Column(name = "password")
     private String password;
 
-
+    @Column(name = "email")
     private String email;
+
+    @OneToOne(
+        mappedBy = "userb",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
+    )
+    private Budget userBudget;
+
+    @OneToOne(
+        mappedBy = "userp",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true,
+        fetch = FetchType.LAZY
+    )
+    private Payment userPayment;
+
     public int count = 0;
-    private Budget userBudget = new Budget();
-    private Payment userPayment = new Payment();
 
     public Profile(){
-
+        this.userBudget = new Budget();
+        this.syncBudget(this.userBudget);
+        this.userPayment = new Payment();
+        this.syncPayment(this.userPayment);
     }
-    public Profile(String user, String password, String email){
+
+    public Profile(String user, String password, String email, Budget userBudget, Payment userPayment){
         super();
         this.user = user;
         this.password = password;
         this.email = email;
+        if (userBudget == null){
+            this.userBudget = new Budget();
+            this.syncBudget(this.userBudget);
+        }
+        if (userPayment == null){
+            this.userPayment = new Payment();
+            this.syncPayment(this.userPayment);
+        }
+        this.userBudget = userBudget;
+        this.syncBudget(this.userBudget);
+        this.userPayment = userPayment;
+        this.syncPayment(this.userPayment);
+    }
+
+/*Synchronizing method for backend */
+    public void syncBudget(Budget budget){
+        if (budget == null){
+            if(this.userBudget != null){
+                this.userBudget.setUser(null);
+            }
+        }else{
+            budget.setUser(this);
+        }
+        this.userBudget = budget;
+    }
+
+    public void syncPayment(Payment payment){
+        if (payment == null){
+            if(this.userPayment != null){
+                this.userPayment.setUser(null);
+            }
+        }else{
+            payment.setUser(this);
+        }
+        this.userPayment = payment;
     }
 /*fill methods */ 
     public void fill(String username, String password, String email){
@@ -46,9 +108,9 @@ public class Profile{
         setEmail(email);
         setPassword(password);
         System.out.println(username + ", " + password +", " + email);
-        if(this.password != null && this.email != null){
-          setAccountID();
-        }
+        // if(this.password != null && this.email != null){
+        //   setAccountID();
+        // }
     }
 
 /*username methods */    
@@ -60,8 +122,8 @@ public class Profile{
     }
     
 /*account ID methods */    
-    public void setAccountID(){
-        this.id = genAccountId();
+    public void setAccountID(long id){
+        this.id = id;
     }
     public long genAccountId(){
         this.count++;
@@ -138,6 +200,7 @@ public class Profile{
 /* Budget and Payment methods*/
     public void setBudget(Budget budgett){
         this.userBudget = budgett;
+        this.syncBudget(this.userBudget);
     }    
 
 

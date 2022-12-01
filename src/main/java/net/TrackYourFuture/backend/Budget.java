@@ -1,18 +1,60 @@
 package net.TrackYourFuture.backend;
 
 import java.util.*;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import net.TrackYourFuture.backend.model.Profile;
+
+@Entity
+@Table(name = "budget")
 public class Budget{
-    private ArrayList<String> items = new ArrayList<>();
-    private ArrayList<Double> costs = new ArrayList<Double>();
+
+    @Id
+    private long budgetId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Profile userb;
+
+    @Column(name = "budget_items")
+    private ArrayList<String> items;
+    @Column(name = "budget_costs")
+    private ArrayList<Double> costs;
+    
+    @Column(name = "salary")
     private double salary = 0;
+    @Column(name = "spending")
     private double totalCurSpend = 0;
+    @Column(name = "annualbudget")
     private double annualBudget = 0;
     // private String allocMethod = "50-30-20";
 
 /*Constructor */
     public Budget (){
+        this.items = new ArrayList<String>();
+        this.costs = new ArrayList<Double>();
         
     }
+/*Setting and getting user */
+    public void setUser(Profile user){
+        this.userb = user;
+    }
+
+    public Profile getUser(Profile user){
+        return this.userb;
+    }
+
 /*salary methods */
     public void setSalary(double sal){
         salary = sal;
@@ -27,6 +69,9 @@ public class Budget{
             total = total + cost.get(i);
         }
         totalCurSpend = total;
+    }
+    public void setSpend(Double spend){
+        this.totalCurSpend = spend;
     }
     public double getSpending(){
         return totalCurSpend;

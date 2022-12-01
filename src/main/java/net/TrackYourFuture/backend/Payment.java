@@ -2,23 +2,65 @@ package net.TrackYourFuture.backend;
 
 import java.util.*;
 import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import net.TrackYourFuture.backend.model.Profile;
+
 //import java.sql.*;
 import java.time.*;
 import java.text.*;
 //package main.java;
-public class Payment extends Budget{
+
+@Entity
+@Table(name = "payment")
+public class Payment{
+
+    @Id
+    private long paymentId;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private Profile userp;
+
+    @Column(name = "stringValue")
+    private String strValue = "";
+
+    @Column(name = "monthlybudget")
+    private double monthlyBudget = 0.0;
+
     private ArrayList<String> loanName = new ArrayList<>(); //List of loans
     private ArrayList<Double> loanAmount = new ArrayList<Double>();// list of loan amounts collerated to the loan names
     private ArrayList<Double> interestRate = new ArrayList<Double>(); //List of Interest collerated to the interest amount
     private ArrayList<Integer> loanTerms = new ArrayList<>(); //List of Loanterms for the loans 
     private ArrayList<Double> monthlyPay = new ArrayList<>();  //Amount that the user can use to pay loans monthly (found from calculate method)
     private ArrayList<Date> repaymentPeriod = new ArrayList<>(); //date in yyyy-MM-dd
-    private double monthlyBudget;
+    
 
 
 /*Constructor */
     public Payment (){
         
+    }
+/*Setting and getting user */
+    public void setUser(Profile user){
+        this.userp = user;
+    }
+
+    public Profile getUser(Profile user){
+        return this.userp;
     }
 //monthly payment methods
     public void setMonthlyPay(double amount){

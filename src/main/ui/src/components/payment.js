@@ -38,6 +38,8 @@ class Payment extends Component {
             {id: 4, loan: new LoanItem('Example3', 200, 4, 2, '2022-05-30' )}],
             currentId: 4
         }
+        this.state.loans = this.props.loans
+        this.state.currentId = this.props.loans.length
     }
     removeLoan = (event, id) =>{
         let loans = this.state.loans
@@ -104,8 +106,8 @@ class Payment extends Component {
                     </table>
                 </div>
                 <div className='payment-piece'>
-
                 </div>
+                <button onClick={event=>this.props.handlePaySave(event,this.state.loans)}>Save</button>
             </div>
         );
     }

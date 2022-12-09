@@ -11,7 +11,7 @@ class App extends React.Component{
     this.handleBudgetChange = this.handleBudgetChange.bind(this)
     this.state = {
       budget: {salary: 0, totalCurSpend: 0},
-      payment: {},
+      payment: {loans: []},
       user: {budget: {salary: 0, totalCurSpend: 0}},
       currentUserID: -1,
       count: 0
@@ -33,10 +33,13 @@ class App extends React.Component{
           })
         }
       };
+      const handlePaySave = (event, loan) => {
+        this.setState({payment: {loans: loan}});
+      }
       const selectUser = (event, curUserID, curUser) =>{
         this.setState({currentUserID: curUserID, user: curUser})
       }
-      //Code to stateshare 
+      //Conditional code usef to stateshare 
       let sal = this.state.budget.salary
       let spen = this.state.budget.totalCurSpend
       if (this.state.currentUserID !== -1){
@@ -55,7 +58,7 @@ class App extends React.Component{
               Tracker tab.
             </div>
             <div label="Payment">
-              <Payment/>
+              <Payment loans={this.state.payment.loans} handlePaySave={handlePaySave}/>
             </div>
             <div label="Engine">
               Engine tab.
